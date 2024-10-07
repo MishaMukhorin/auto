@@ -11,4 +11,3 @@ add_executable(MealyMachine
         machines/MooreMachine.cpp
         )
 
-add_executable(M machines/spare.cpp)
