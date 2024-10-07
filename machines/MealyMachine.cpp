@@ -46,7 +46,13 @@ MooreMachine MealyMachine::ToMoore() {
             newStateName.append(state);
             newStateName.append("_");
             newStateName.append(outSignal);
-
+            if (newMachine.inState.empty())
+            {
+                if (state == inState)
+                {
+                    newMachine.inState = newStateName;
+                }
+            }
             newMachine.states[newStateName] = outSignal;
             stateMap[state].push_back(newStateName);
 
@@ -68,7 +74,6 @@ MooreMachine MealyMachine::ToMoore() {
             }
         }
     }
-
     newMachine.inputSignals = inputSignals;
     return newMachine;
 }
@@ -77,16 +82,25 @@ void MealyMachine::WriteCsv(const std::string& file) {
     std::ofstream f(file);
     std::vector<std::string> orderedActivators(inputSignals);
 
-    std::vector<std::string> orderedStates(states);
+    std::vector<std::string> orderedStates;
+    orderedStates.push_back(inState);
+    for (const std::string & state: states)
+    {
+        if (state != inState)
+        {
+            orderedStates.push_back(state);
+        }
+    }
 
-
-    for (const std::string& state : orderedStates) {
+    for (const std::string& state : orderedStates)
+    {
         f << ";" << state;
     }
     f << std::endl;
     for (const std::string& activator : orderedActivators) {
         f << activator;
-        for (const std::string& state : orderedStates) {
+        for (const std::string& state : orderedStates)
+        {
             auto it = std::find_if(transitions.begin(), transitions.end(),
                                    [&state, &activator](const std::pair<Transition, std::string>& tr) {
                                        return tr.first.fromState == state && tr.first.signal == activator;

@@ -15,6 +15,7 @@ class MooreMachine;
 
 class MealyMachine {
 public:
+    std::string inState;
     std::vector<std::string> inputSignals;
     std::vector<std::string> states;
     std::unordered_map<Transition, std::string> transitions;

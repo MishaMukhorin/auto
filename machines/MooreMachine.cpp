@@ -21,7 +21,7 @@ MealyMachine MooreMachine::ToMealy() {
             newMachine.transitions.emplace(newTr, outSignal);
         }
     }
-
+    newMachine.inState = inState;
     newMachine.inputSignals = inputSignals;
     for (const auto& [state, signal] : states) {
         newMachine.states.push_back(state);
@@ -37,10 +37,14 @@ void MooreMachine::WriteCsv(const std::string& file) {
     std::sort(orderedActivators.begin(), orderedActivators.end());
 
     std::vector<std::string> orderedStates;
-    for (const auto& [state, outSignal] : states) {
-        orderedStates.push_back(state);
+    orderedStates.push_back(inState);
+    for (const auto& [state, outSignal] : states)
+    {
+        if (state != inState)
+        {
+            orderedStates.push_back(state);
+        }
     }
-    std::sort(orderedStates.begin(), orderedStates.end());
 
     for (const std::string& state : orderedStates) {
         f << ";" << states[state];

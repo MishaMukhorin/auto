@@ -41,6 +41,7 @@ MealyMachine readMealyCSV(const std::string& file) {
 
         // First line contains the states
         if (firstLine) {
+            machine.inState = tokens[1];
             machine.states.insert(machine.states.end(), tokens.begin() + 1, tokens.end());
             firstLine = false;
             continue;
@@ -90,6 +91,7 @@ MooreMachine readMooreCSV(const std::string& file) {
         }
 
         if (secondLine) {
+            machine.inState = tokens[1];
             for (size_t i = 1; i < tokens.size(); ++i) {
                 states.push_back(tokens[i]);
                 machine.states[states.back()] = outputs[i];

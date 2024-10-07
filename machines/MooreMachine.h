@@ -5,7 +5,7 @@
 #ifndef AUTO_MOOREMACHINE_H
 #define AUTO_MOOREMACHINE_H
 
-#include <unordered_map>
+#include <map>
 #include <string>
 #include <vector>
 #include <unordered_set>
@@ -16,8 +16,9 @@ class MealyMachine;
 
 class MooreMachine {
 public:
+    std::string inState;
     std::vector<std::string> inputSignals;
-    std::unordered_map<std::string, std::string> states;
+    std::map<std::string, std::string> states;
     std::unordered_set<Transition> transitions;
 
     MooreMachine();
