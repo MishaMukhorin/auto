@@ -94,7 +94,7 @@ MooreMachine readMooreCSV(const std::string& file) {
             machine.inState = tokens[1];
             for (size_t i = 1; i < tokens.size(); ++i) {
                 states.push_back(tokens[i]);
-                machine.states[states.back()] = outputs[i];
+                machine.states[states.back()] = outputs[i-1];
             }
             secondLine = false;
             continue;

@@ -71,3 +71,61 @@ void MooreMachine::WriteCsv(const std::string& file) {
     }
     f.close();
 }
+void MooreMachine::DeleteUnreachables()
+{
+    std::unordered_set<std::string> reachables;
+    reachables.insert(inState);
+
+    for (const auto& [state, signal] : states)
+    {
+        for (const auto& tr : transitions)
+        {
+            if (tr.fromState == state)
+            {
+                reachables.insert(tr.toState);
+            }
+        }
+    }
+
+    for (const auto& [state, signal] : states)
+    {
+        if (!reachables.contains(state))
+        {
+            states.erase(state);
+        }
+    }
+
+}
+
+int GroupBySignals(std::map<std::string, std::vector<std::string>> &groupsOfStates, std::map<std::string, std::string> &statesMap)
+{
+    int signalsCount = 0;
+
+    for (const auto& [state, signal] : statesMap)
+    {
+        if (!groupsOfStates.contains(signal))
+        {
+            groupsOfStates.insert({signal, {state}});
+            signalsCount++;
+        }
+        else
+        {
+            groupsOfStates.at(signal).push_back(state);
+        }
+    }
+
+    return signalsCount;
+}
+
+
+void MooreMachine::Minimize()
+{
+    std::map<std::string, std::vector<std::string>> groupsOfStates;
+
+
+    int signalsCounter = GroupBySignals(groupsOfStates, states);
+
+
+
+
+}

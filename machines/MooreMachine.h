@@ -24,6 +24,8 @@ public:
     MooreMachine();
 
     MealyMachine ToMealy();
+    void Minimize();
+    void DeleteUnreachables();
     void WriteCsv(const std::string& file);
 };
 

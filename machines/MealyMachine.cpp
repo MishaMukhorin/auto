@@ -78,9 +78,12 @@ MooreMachine MealyMachine::ToMoore() {
     return newMachine;
 }
 
+
+
 void MealyMachine::WriteCsv(const std::string& file) {
     std::ofstream f(file);
     std::vector<std::string> orderedActivators(inputSignals);
+    std::sort(orderedActivators.begin(), orderedActivators.end());
 
     std::vector<std::string> orderedStates;
     orderedStates.push_back(inState);
